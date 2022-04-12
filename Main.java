@@ -45,13 +45,29 @@ public class Main extends JFrame {
             archiwizacja.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     });
+        clik.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clik.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                new WprowadzKlientke(frame).setVisible(rootPaneCheckingEnabled);
+            }
+        });
 
+    panelClik.add(clik);
+    panelClik.add(list);
+
+
+
+    this.getContentPane().add(panelClik);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 
     private JFrame frame = this;
     private final JMenuBar menu =  new JMenuBar();
+    private JPanel panelClik = new JPanel();
+    private JButton clik = new JButton("Dodaj");
+    private JButton list = new JButton("Lista klientek");
 
 
         public static void main (String[]args)
