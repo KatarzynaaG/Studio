@@ -27,22 +27,32 @@ public class WprowadzKlientke extends JDialog
             this.setTitle("Klientka");
             this.setBounds(300, 400, 600, 400);
 
-           /* wybor.setCurrentDirectory(new File(System.getProperty("user.dir")));
-            wybor.setMultiSelectionEnabled(false);
-            wybor.setAcceptAllFileFilterUsed(true);*/
-
-            zapisz.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
 
             String [] columnNames = {"Data wprowadzenia", "Nazwisko", "Imię", "Cel", "Waga początkowa", "Dieta"};
             Object [][] data = new Object [1][6];
             JTable tab = new JTable(data, columnNames);
             JScrollPane scrollPane = new JScrollPane(tab);
             tab.setFillsViewportHeight(true);
+
+            zapisz.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String [] opcje = {"Tak", "Nie"};
+                    int rc = JOptionPane.showOptionDialog(
+                            null,
+                            "Czy chcesz zapisać?",
+                            null,
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            opcje,
+                            opcje[1]);
+                    System.out.println("Wubrałeś" + rc + " " + opcje[rc]);
+
+                    
+                }
+            });
+
 
 
             panelZapisz.add(zapisz);
@@ -55,6 +65,7 @@ public class WprowadzKlientke extends JDialog
         private final JPanel panelZapisz = new JPanel();
         private final JButton zapisz = new JButton("Zapisz");
         private final JFileChooser wybor = new JFileChooser();
+
 
 
         public static void main(String[] args)

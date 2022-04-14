@@ -35,6 +35,7 @@ public class Main extends JFrame {
         public void actionPerformed(ActionEvent e)
         {
             menuFile.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            new lista(frame).setVisible(rootPaneCheckingEnabled);
 
         }
     });
@@ -52,6 +53,13 @@ public class Main extends JFrame {
                 new WprowadzKlientke(frame).setVisible(rootPaneCheckingEnabled);
             }
         });
+        list.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                list.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                new lista(frame).setVisible(rootPaneCheckingEnabled);
+            }
+        });
 
     panelClik.add(clik);
     panelClik.add(list);
@@ -59,7 +67,7 @@ public class Main extends JFrame {
 
 
     this.getContentPane().add(panelClik);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
 
