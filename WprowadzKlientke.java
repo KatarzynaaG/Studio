@@ -1,78 +1,66 @@
 package com.company;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class WprowadzKlientke extends JDialog
+public class WprowadzKlientke  extends JDialog
 {
+    public WprowadzKlientke (JFrame parent)
+    {
+        super (parent, true);
+        initComponents ();
 
-        public WprowadzKlientke (JFrame parent)
-        {
-            super (parent, true);
-            initComponents ();
+        int szer = (int)parent.getBounds().getWidth();
+        int wys = (int)parent.getBounds().getHeight();
 
-            int szer = (int)parent.getBounds().getWidth();
-            int wys = (int)parent.getBounds().getHeight();
+        int szerRamki = this.getSize().width;
+        int wysRamki = this.getSize().height;
 
-            //this.setSize(szer/10, wys/4);
+        this.setLocation(parent.getBounds().x+(szer-szerRamki)/2, parent.getBounds().y+(wys-wysRamki)/2);
+    }
+    public void initComponents () {
+        this.setTitle("Klientka");
+        this.setBounds(300, 400, 600, 400);
 
-            int szerRamki = this.getSize().width;
-            int wysRamki = this.getSize().height;
+        zapisz.addActionListener(e -> {
+            String [] opcje = {"Tak", "Nie"};
+            int rc = JOptionPane.showOptionDialog(
+                    null,
+                    "Czy chcesz zapisać?",
+                    null,
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcje,
+                    opcje[1]);
+            System.out.println("WYbrałeś" + rc + " " + opcje[rc]);
+        });
+        panelZapisz.add(zapisz);
 
-            this.setLocation(parent.getBounds().x+(szer-szerRamki)/2, parent.getBounds().y+(wys-wysRamki)/2);
-        }
+        comboBox.addItem("Tak");
+        comboBox.addItem("Nie");
+        comboBox.addItem("I rata - opłacona");
+        comboBox.addItem("II rata- opłacona");
+        pay.setCellEditor(new DefaultCellEditor(comboBox));
 
-        public void initComponents () {
-            this.setTitle("Klientka");
-            this.setBounds(300, 400, 600, 400);
+        this.getContentPane().add(scrollPane);
+        this.getContentPane().add(panelZapisz, BorderLayout.PAGE_END);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    private final JPanel panelZapisz = new JPanel();
+    private final JButton zapisz = new JButton("Zapisz");
+    final String[] columnNames = {"Numer", "Data wprowadzenia", "Nazwisko", "Imię", "Cel", "Waga początkowa", "Dieta","Zapłacono"};
+    DefaultTableModel model = new DefaultTableModel(columnNames, 2);
+    JTable tab = new JTable(model);
+    JScrollPane scrollPane = new JScrollPane(tab);
 
+    TableColumn pay = tab.getColumnModel().getColumn(7);
+    JComboBox<String> comboBox = new JComboBox<>();
 
-            String [] columnNames = {"Data wprowadzenia", "Nazwisko", "Imię", "Cel", "Waga początkowa", "Dieta"};
-            Object [][] data = new Object [1][6];
-            JTable tab = new JTable(data, columnNames);
-            JScrollPane scrollPane = new JScrollPane(tab);
-            tab.setFillsViewportHeight(true);
-
-            zapisz.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String [] opcje = {"Tak", "Nie"};
-                    int rc = JOptionPane.showOptionDialog(
-                            null,
-                            "Czy chcesz zapisać?",
-                            null,
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            opcje,
-                            opcje[1]);
-                    System.out.println("Wubrałeś" + rc + " " + opcje[rc]);
-
-                    
-                }
-            });
-
-
-
-            panelZapisz.add(zapisz);
-
-            this.getContentPane().add(scrollPane);
-            this.getContentPane().add(panelZapisz, BorderLayout.PAGE_END);
-            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        }
-
-        private final JPanel panelZapisz = new JPanel();
-        private final JButton zapisz = new JButton("Zapisz");
-        private final JFileChooser wybor = new JFileChooser();
-
-
-
-        public static void main(String[] args)
-        {
-            new Main ().setVisible(true);
-        }
-
+    public static void main(String[] args)
+    {
+        new Main ().setVisible(true);
     }
 
-
+}
